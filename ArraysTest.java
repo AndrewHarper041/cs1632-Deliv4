@@ -64,7 +64,7 @@ public class ArraysTest
         sortArrays();
         
         //Create deep copy of arrays post sorting
-        int[][] copyArr = deepCopy(arrays);
+        int[][] copyArr = deepCopy();
         
         //Sort arrays second time
         sortArrays();
@@ -72,6 +72,33 @@ public class ArraysTest
         //Check that the twice sorted arrays is the same as after the first sort
         for(int i=0; i<arrays.length; i++)
             org.junit.Assert.assertArrayEquals(copyArr[i], arrays[i]);
+    }
+    
+    //Tests that an arrays included elements do not change upon sorting
+    @Test
+    public void sameElementsTest()
+    {
+        //Get a list of all elements in arrays
+        int[][] elements = deepCopy();
+        
+        //Sort arrays
+        sortArrays();
+        
+        //Check that now sorted arrays contains all the elements within the pre sorted copy
+        for(int i=0; i<arrays.length; i++)
+        {
+            for(int j=0; j<arrays[i].length; j++)
+            {
+                boolean bool = false; //bool will be set as true if element is found
+                
+                //Loop over array to find element, as other methods (i.e. Arrays.asList().contains() ) don't play nice with primitives
+                for(int num : arrays[i])
+                    if(num == elements[i][j])
+                        bool = true;
+
+                org.junit.Assert.assertTrue(bool);
+            }
+        }
     }
     
     /*
@@ -112,13 +139,13 @@ public class ArraysTest
         return rand.nextInt(lengthMax);
     }
     
-    //Returns a deep copy of a
-    public int[][] deepCopy(int[][] input)
+    //Returns a deep copy of array
+    public int[][] deepCopy()
     {
-        int[][] target = new int[input.length][];
+        int[][] target = new int[arrays.length][];
         
-        for (int i=0; i <input.length; i++) 
-            target[i] = Arrays.copyOf(input[i], input[i].length);
+        for (int i=0; i <arrays.length; i++) 
+            target[i] = Arrays.copyOf(arrays[i], arrays[i].length);
         
         return target;
     }
