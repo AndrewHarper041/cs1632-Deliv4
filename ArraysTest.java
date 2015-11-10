@@ -8,8 +8,8 @@ public class ArraysTest
 {
     static Random rand;
     static int[][] arrays;
-    static int numArrays = 150; //arbitrary > 100 value
-    static int lengthMax = 8192; //arbitrary > 100 value
+    static int numArrays = 150; //number of individual arrays, arbitrary > 100 value
+    static int lengthMax = 8192; //max individual array length, arbitrary > 100 value
     
     /*
      * Setup & Tear Down
