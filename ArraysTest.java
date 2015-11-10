@@ -111,11 +111,11 @@ public class ArraysTest
         for(int i=0; i<arrays.length; i++)
         {
             //Initialize the array to a random length
-            arrays[i] = new int[randLength()];
+            arrays[i] = new int[rand.nextInt(lengthMax)];
             
             //Populate the array with random values 
             for(int j=0; j<arrays[i].length; j++)
-                arrays[i][j] = randValue();
+                arrays[i][j] = rand.nextInt(Integer.MAX_VALUE);
         }
     }
     
@@ -126,19 +126,7 @@ public class ArraysTest
         for(int i=0; i<arrays.length; i++)
             Arrays.sort(arrays[i]);
     }
-    
-    //Returns a random value from 0 to max int
-    public static int randValue()
-    {
-        return rand.nextInt(Integer.MAX_VALUE);
-    }
-    
-    //Returns rand int from 0 to lengthMax
-    public static int randLength()
-    {
-        return rand.nextInt(lengthMax);
-    }
-    
+            
     //Returns a deep copy of array
     public int[][] deepCopy()
     {
