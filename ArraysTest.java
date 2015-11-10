@@ -27,7 +27,7 @@ public class ArraysTest
         populateArray();
     }
     
-    //Reset arrays to null
+    //Reset arrays to null so that every test has newly generated unsorted arrays
     @After
     public void tearDown()
     {
@@ -53,8 +53,25 @@ public class ArraysTest
         
         //Iterate over arrays post sort asserting that the size has not changed
         for(int i=0; i<numArrays; i++)
-            org.junit.Assert.assertEquals(arrSizes[i], arrays[i].length);
-                
+            org.junit.Assert.assertEquals(arrSizes[i], arrays[i].length);   
+    }
+    
+    //Tests that sorting is Idempotent and multiple runs will not change result
+    @Test
+    public void idempotentTest()
+    {
+        //Sort arrays first time
+        sortArrays();
+        
+        //Create deep copy of arrays post sorting
+        int[][] copyArr = deepCopy(arrays);
+        
+        //Sort arrays second time
+        sortArrays();
+        
+        //Check that the twice sorted arrays is the same as after the first sort
+        for(int i=0; i<arrays.length; i++)
+            org.junit.Assert.assertArrayEquals(copyArr[i], arrays[i]);
     }
     
     /*
@@ -93,5 +110,16 @@ public class ArraysTest
     public static int randLength()
     {
         return rand.nextInt(lengthMax);
+    }
+    
+    //Returns a deep copy of a
+    public int[][] deepCopy(int[][] input)
+    {
+        int[][] target = new int[input.length][];
+        
+        for (int i=0; i <input.length; i++) 
+            target[i] = Arrays.copyOf(input[i], input[i].length);
+        
+        return target;
     }
 }
